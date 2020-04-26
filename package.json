@@ -1,0 +1,31 @@
+{
+  "name": "zum",
+  "version": "0.0.5",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "10.13.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zum-v2.git"
+  },
+  "author": "zaygozi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zum-v2/issues"
+  },
+  "homepage": "https://github.com/zum-v2#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.9.10",
+    "njwt": "^1.0.0",
+    "secure-random": "^1.1.2"
+  }
+}
