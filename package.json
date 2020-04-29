@@ -21,10 +21,11 @@
   },
   "homepage": "https://github.com/zum-v2#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "mongoose": "^5.9.10",
+    "mongoose": "^5.4.1",
     "njwt": "^1.0.0",
     "secure-random": "^1.1.2"
   }

@@ -6,6 +6,8 @@ const {getUsername} = require('./functions/get_username');
 const {verify} = require('./functions/login-verification');
 const {delUser} = require('./functions/delete_user');
 const {updateUser} = require('./functions/update_user');
+const {getMK} = require('./functions/get_mk');
+const {getSK} = require('./functions/get_sk');
 
 const app = express();
 
@@ -17,6 +19,14 @@ app.use(bodyparser.json());
 
 app.get('/',(req,res) => {
    res.sendFile(`${__dirname}/public/home.html`)
+});
+
+app.get('/mk/:priority', (req,res) => {
+    getMK(req,res);
+});
+
+app.get('/sk/:user', (req,res) => {
+    getSK(req,res);
 });
 
 app.post('/register', (req,res) => {

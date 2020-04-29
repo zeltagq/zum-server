@@ -2,7 +2,7 @@ const {db} = require('./dbconf');
 const encryptor = require('../functions/encryptor');
 
 // Schema for users
-let userSchema = new db.Schema({
+let UserSchema = new db.Schema({
     username : {
         type : String,
         required : true,
@@ -45,7 +45,7 @@ let userSchema = new db.Schema({
 });
 
 // Schema for signing keys used to sign jwt tokens by the server
-let keySchema = new db.Schema({
+let KeySchema = new db.Schema({
     user : {
         type : String,
         required : true,
@@ -62,7 +62,7 @@ let keySchema = new db.Schema({
 });
 
 // Schema for master signing key used to sign jwt tokens by the client
-let masterKeySchema = new db.Schema({
+let MasterKeySchema = new db.Schema({
     // This field is for maintaining multiple master keys to prevent bottlenecks
     priority : {
         type : String,
@@ -80,7 +80,7 @@ let masterKeySchema = new db.Schema({
     }
 });
 
-userSchema.pre('save',function(next) {
+UserSchema.pre('save',function(next) {
     let user = this;
     if(user.isModified('password')) {
         encryptor.encrypt(user.password,(err,hash) => {
@@ -94,9 +94,9 @@ userSchema.pre('save',function(next) {
     }
 });
 
-let User = db.model('USERS', userSchema); // Model for storing users
-let SigningKey = db.model('SK', keySchema); // Model for storing signing keys
-let MK = db.model('MK', masterKeySchema); // Model for storing master keys
+let User = db.model('User', UserSchema); // Model for storing users
+let SigningKey = db.model('sk', KeySchema); // Model for storing signing keys
+let MK = db.model('mk', MasterKeySchema); // Model for storing master keys
 
 module.exports = {User};
 module.exports = {SigningKey};

@@ -4,7 +4,7 @@ const njwt = require('njwt');
 
 function jwtDecode(token, priority, callback) {
     MK.find({priority:priority}).then((result) => {
-        let mk = result[0];
+        let mk = result[0].key;
         let key = Buffer.from(mk, 'base64');
         njwt.verify(token, key, (err, verifiedJwt) => {
             if(callback)
