@@ -33,7 +33,7 @@ app.post('/register', (req,res) => {
     createUser(req,res);
 });
 
-app.get('/users/:name', (req,res) => {
+app.get('/users/:username', (req,res) => {
     getUsername(req,res);
 });
 
@@ -41,7 +41,7 @@ app.post('/login', (req,res) => {
     verify(req,res);
 });
 
-app.delete('/users/:name', (req,res) => {
+app.delete('/users/:username', (req,res) => {
     delUser(req,res);
 });
 

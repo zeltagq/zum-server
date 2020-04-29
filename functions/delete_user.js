@@ -1,7 +1,7 @@
 const {User} = require('../db/models');
 
 function delUser(req,res) {
-    User.find({username:req.params.name}).then((user) => {
+    User.find({username:req.params.username}).then((user) => {
         if(user.length === 0) {
             res.status(404).send('User not found');
         }
