@@ -5,7 +5,7 @@ const cryptoKey = require('secure-random');
 function rotateMK(priority) {
     MK.find({priority : priority}).then((result) => {
         if(result.length === 0) {
-            console.error('No master key found with the given priority')
+            console.error('No master key found with the given priority');
         }
         else {
             let mk = result[0];
