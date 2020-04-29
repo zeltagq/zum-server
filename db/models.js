@@ -98,6 +98,4 @@ let User = db.model('User', UserSchema); // Model for storing users
 let SigningKey = db.model('sk', KeySchema); // Model for storing signing keys
 let MK = db.model('mk', MasterKeySchema); // Model for storing master keys
 
-module.exports = {User};
-module.exports = {SigningKey};
-module.exports = {MK};
+module.exports = {User, SigningKey, MK};

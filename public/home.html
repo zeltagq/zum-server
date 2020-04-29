@@ -44,18 +44,18 @@
     </div>
 <script>
     function displayInfo(username) {
-        $.getJSON("https://zagan-user-management.herokuapp.com/users/" + username,(data) => {
+        $.getJSON(`https://zumapi.herokuapp.com/users/${username}`, (data) => {
             if(data.length === 0) {
                 $('#info').hide();
                 window.alert('User Not Found !');
             }
             else {
                 $('#info').show();
-                let username = data[0].username;
-                let name = data[0].name;
-                let email = data[0].email;
-                let scope = data[0].scope;
-                let country = data[0].country;
+                let username = data.username;
+                let name = data.name;
+                let email = data.email;
+                let scope = data.scope;
+                let country = data.country;
                 $('#r1').text(username);
                 $('#r2').text(name);
                 $('#r3').text(email);
