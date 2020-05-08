@@ -6,7 +6,7 @@ function delUser(req,res) {
             res.status(404).send('User not found');
         }
         else {
-            User.findOneAndRemove({username:req.params.name}).then((user) => {
+            User.findOneAndRemove({username:req.params.username}).then((user) => {
                 res.status(200).send(user);
             },(err) => {
                 res.status(400).send(err);

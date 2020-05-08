@@ -68,6 +68,12 @@ function confirmVerification(req, res) {
                     user.save().then(() => {
                         response = {"verified" : true};
                         res.status(200).send(response);
+                        // removing temporary evc record
+                        EVC.findOneAndRemove({email:userEmail}).then(() => {
+                            console.log(`EVC record cleared for ${userEmail}`);
+                        }, (err) => {
+                            console.warn(err);
+                        });
                     }, (err) => {
                         res.status(500).send('Database Error');
                         console.warn(err);
@@ -78,4 +84,4 @@ function confirmVerification(req, res) {
     });
 }
 
-module.exports = {registraionEmail, confirmVerification};
+module.exports = {registrationEmail, confirmVerification};
