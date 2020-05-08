@@ -10,6 +10,8 @@ function jwtDecode(token, priority, callback) {
             if(callback)
                 callback(err?err : null, err?null : verifiedJwt.body)
         });
+    }, (err) => {
+        console.error(`Could not find master key with priority ${priority}`);
     });
 }
 

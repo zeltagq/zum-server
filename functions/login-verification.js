@@ -19,6 +19,14 @@ function verify(req,res) {
                 if(result.length !== 0) {
                     let hash = result[0].password;
                     let scope = result[0].scope;
+                    // check if user email is verified
+                    if (result[0].verified === false) {
+                        return res.status(403).send(response);
+                    }
+                    // check if user is disabled
+                    if (result[0].disabled === true) {
+                        return res.status(403).send(response);
+                    }
                     encryptor.decode(pass,hash,(r) => {
                         // Right password
                         if(r===true) {
@@ -33,7 +41,7 @@ function verify(req,res) {
                                         domain : 'myapp.com',
                                         httpOnly : true,
                                         secure : false,
-                                        expires : new Date().getTime() + (60*60*1000*24) // 24 hrs
+                                        expires : new Date(new Date().getTime() + (60*60*1000*24)) // 24 hrs
                                     }).send(response);
                                     rotateMK(req.body.priority);
                                 }

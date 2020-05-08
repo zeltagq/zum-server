@@ -8,9 +8,9 @@ function createToken(username, scope, callback) {
 
     var claims = {
         iss: "ZUM",
-        aud: "https://myapp.com",
+        aud: "http://myapp.com",
         sub: username,
-        scope: scope // scope is used to differentiate access levels (free/standard/premium)
+        scope: scope // scope is used to differentiate access levels (standard/premium/blocked)
     }
 
     let jwt = njwt.create(claims, signingKey);

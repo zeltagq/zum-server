@@ -2,6 +2,7 @@
 const {User} = require('../db/models');
 const {jwtDecode} = require('./jwt-decoder');
 const {rotateMK} = require('./rotate_mk');
+const {registrationEmail} = require('./mailer');
 
 function createUser(req,res) {
     jwtDecode(req.body.token, req.body.priority, (err, data) => {
@@ -30,6 +31,7 @@ function createUser(req,res) {
                 res.sendStatus(200);
                 console.log(`New user registration : ${user.username}`);
                 rotateMK(req.body.priority);
+                registrationEmail('Zagan', email);
             }, (err) => {
                 res.status(400).send(err);
             });
