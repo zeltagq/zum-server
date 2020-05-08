@@ -10,7 +10,7 @@ const uniqid = require('uniqid');
 mail.setApiKey(process.env.SG);
 
 // Email verification after registration
-function registraionEmail(appname, email) {
+function registrationEmail(appname, email) {
     let data = fs.readFileSync('../mail/register.html');
     let content = data.toString('utf8');
 
