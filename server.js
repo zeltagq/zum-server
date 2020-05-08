@@ -8,6 +8,7 @@ const {delUser} = require('./functions/delete_user');
 const {updateUser} = require('./functions/update_user');
 const {getMK} = require('./functions/get_mk');
 const {getSK} = require('./functions/get_sk');
+const {confirmVerification} = require('./functions/mailer');
 
 const app = express();
 
@@ -47,6 +48,10 @@ app.delete('/users/:username', (req,res) => {
 
 app.patch('/users/:username', (req,res) => {
     updateUser(req,res);
+});
+
+app.get('/email-verification/:code', (req,res) => {
+    confirmVerification(req,res);
 });
 
 app.listen(port,() => {

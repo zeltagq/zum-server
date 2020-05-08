@@ -38,10 +38,25 @@ let UserSchema = new db.Schema({
     // Scope defines user access level, set and updated by the client app
     scope : {
         type : String,
-        required : true,
         trim : true,
         min : 1,
+        default : 'basic'
+    },
+    // Denotes if email is verified
+    verified : {
+        type : Boolean,
+        default : false
+    },
+    // Denotes if user is disabled
+    disabled : {
+        type : Boolean,
+        default : false
     }
+    // MFA
+    // mfa : {
+    //     type : Boolean,
+    //     default : false
+    // }
 });
 
 // Schema for signing keys used to sign jwt tokens by the server
@@ -80,6 +95,23 @@ let MasterKeySchema = new db.Schema({
     }
 });
 
+// Schema for temporary storage of email verification link codes
+let EvcSchema = new db.Schema({
+    email : {
+        type : String,
+        required : true,
+        trim : true,
+        min : 1,
+        unique : true
+    },
+    code : {
+        type : String,
+        required : true,
+        trim : true,
+        min : 1
+    }
+});
+
 UserSchema.pre('save',function(next) {
     let user = this;
     if(user.isModified('password')) {
@@ -97,5 +129,6 @@ UserSchema.pre('save',function(next) {
 let User = db.model('User', UserSchema); // Model for storing users
 let SigningKey = db.model('sk', KeySchema); // Model for storing signing keys
 let MK = db.model('mk', MasterKeySchema); // Model for storing master keys
+let EVC = db.model('evc', EvcSchema); // Model for storing email verification codes
 
-module.exports = {User, SigningKey, MK};
+module.exports = {User, SigningKey, MK, EVC};
