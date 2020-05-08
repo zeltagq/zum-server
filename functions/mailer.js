@@ -5,13 +5,14 @@ const mail = require('@sendgrid/mail');
 const {EVC} = require('../db/models');
 const {User} = require('../db/models');
 const uniqid = require('uniqid');
+const path = require('path');
 
 // Sendgrid api key
 mail.setApiKey(process.env.SG);
 
 // Email verification after registration
 function registrationEmail(appname, email) {
-    let data = fs.readFileSync(`${__dirname}/mail/register.html`);
+    let data = fs.readFileSync(path.join(__dirname, 'mail', 'register.html'));
     let content = data.toString('utf8');
 
     let code = uniqid('zum-');
