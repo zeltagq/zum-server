@@ -44,7 +44,7 @@
     </div>
 <script>
     function displayInfo(username) {
-        $.getJSON(`https://zumapi.herokuapp.com/users/${username}`, (data) => {
+        $.getJSON(`https://www.zumapi.gq/users/${username}`, (data) => {
             if(data.length === 0) {
                 $('#info').hide();
                 window.alert('User Not Found !');
