@@ -12,7 +12,7 @@ mail.setApiKey(process.env.SG);
 
 // Email verification after registration
 function registrationEmail(appname, email) {
-    let data = fs.readFileSync(path.join(__dirname, 'mail', 'register.html'));
+    let data = fs.readFileSync(path.join(__dirname, '..', 'mail', 'register.html'));
     let content = data.toString('utf8');
 
     let code = uniqid('zum-');
