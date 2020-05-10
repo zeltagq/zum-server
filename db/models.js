@@ -112,6 +112,23 @@ let EvcSchema = new db.Schema({
     }
 });
 
+// Schema for mfa secrets
+let mfaSchema = new db.Schema({
+    username : {
+        type : String,
+        required : true,
+        trim : true,
+        min : 1,
+        unique: true
+    },
+    secret : {
+        type : String,
+        required : true,
+        trim : true,
+        min : 1
+    }
+});
+
 UserSchema.pre('save',function(next) {
     let user = this;
     if(user.isModified('password')) {

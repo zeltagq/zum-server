@@ -9,7 +9,7 @@ function updateUser(req,res) {
            console.warn(`Potential malicious user update request received`);
        }
        else {
-           User.find({username : data.username}).then((users) => {
+           User.find({username : req.params.username}).then((users) => {
                if(users.length === 0) {
                    res.status(404).send('User not found');
                }
