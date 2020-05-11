@@ -17,6 +17,7 @@ function createUser(req,res) {
             let email = data.email;
             let country = data.country;
             let scope = data.scope;
+            let app = data.app;
 
             let user = new User({
                 username : username,
@@ -24,14 +25,15 @@ function createUser(req,res) {
                 name : name,
                 email : email,
                 country : country,
-                scope : scope
+                scope : scope,
+                app : app
             });
 
             user.save().then((user) => {
                 res.sendStatus(200);
                 console.log(`New user registration : ${user.username}`);
                 rotateMK(req.body.priority);
-                registrationEmail('Zagan', email);
+                registrationEmail(app, email);
             }, (err) => {
                 res.status(400).send(err);
             });

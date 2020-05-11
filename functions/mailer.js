@@ -85,4 +85,104 @@ function confirmVerification(req, res) {
     });
 }
 
-module.exports = {registrationEmail, confirmVerification};
+// Email for password reset
+function passwordResetEmail(appname, email) {
+    let data = fs.readFileSync(path.join(__dirname, '..', 'mail', 'password-reset.html'));
+    let content = data.toString('utf8');
+
+    let code = uniqid('zum-');
+
+    let view = {
+        app : appname,
+        code : code
+    }
+
+    // Store the generated code with the email in the database
+    let evc = new EVC({
+        email : email,
+        code : code
+    });
+    evc.save().then(() => {
+        console.log(`New evc record created for ${email}`);
+    }, (err) => {
+        console.error('Unable to create new evc record');
+    });
+
+    let html = mustache.render(content, view);
+
+    const msg = {
+        to: email,
+        from: 'noreply@zumapi.gq',
+        subject: 'Password Reset',
+        html: html
+    };
+
+    mail.send(msg).then(() => {
+        console.log(`Password reset mail sent to ${email}`);
+    }, (err) => {
+        console.error(err);
+    });
+}
+
+// Confirm password reset
+function confirmPassReset(req, res) {
+    let code = req.params.code;
+    let response = {"verified" : false};
+    EVC.find({code : code}).then((results) => {
+        if(results.length === 0) {
+            res.status(200).send(response);
+        }
+        else {
+            let userEmail = results[0].email;
+            User.find({email : userEmail}).then((users) => {
+                if(users.length === 0) {
+                    res.status(200).send(response);
+                }
+                else {
+                    response = {"verified" : true};
+                    res.status(200).send(response);
+                    // removing temporary evc record
+                    EVC.findOneAndRemove({email:userEmail}).then(() => {
+                        console.log(`EVC record cleared for ${userEmail}`);
+                    }, (err) => {
+                        console.warn(err);
+                    });
+                }
+            });
+        }
+    });
+}
+
+// Account termination mail
+function terminationMail(appname, email, reason) {
+    let data = fs.readFileSync(path.join(__dirname, '..', 'mail', 'account-termination.html'));
+    let content = data.toString('utf8');
+
+    let view = {
+        app : appname,
+        reason : reason
+    }
+
+    let html = mustache.render(content, view);
+
+    const msg = {
+        to: email,
+        from: 'noreply@zumapi.gq',
+        subject: 'Account Terminated',
+        html: html
+    };
+
+    mail.send(msg).then(() => {
+        console.log(`Account termination mail sent to ${email}`);
+    }, (err) => {
+        console.error(err);
+    });
+}
+
+module.exports = {
+    registrationEmail,
+    confirmVerification,
+    passwordResetEmail,
+    confirmPassReset,
+    terminationMail
+};

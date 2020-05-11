@@ -2,12 +2,11 @@ const express = require('express');
 const bodyparser = require('body-parser');
 
 const {createUser} = require('./functions/user_creation');
-const {getUsername} = require('./functions/get_username');
+const {getUser} = require('./functions/get_user');
 const {verify} = require('./functions/login-verification');
 const {delUser} = require('./functions/delete_user');
 const {updateUser} = require('./functions/update_user');
 const {getMK} = require('./functions/get_mk');
-const {getSK} = require('./functions/get_sk');
 const {confirmVerification} = require('./functions/mailer');
 
 const app = express();
@@ -26,16 +25,12 @@ app.get('/mk/:priority', (req,res) => {
     getMK(req,res);
 });
 
-app.get('/sk/:user', (req,res) => {
-    getSK(req,res);
-});
-
 app.post('/register', (req,res) => {
     createUser(req,res);
 });
 
-app.get('/users/:username', (req,res) => {
-    getUsername(req,res);
+app.get('/users/:input', (req,res) => {
+    getUser(req,res);
 });
 
 app.post('/login', (req,res) => {

@@ -35,6 +35,12 @@ let UserSchema = new db.Schema({
         trim : true,
         min : 1
     },
+    app : {
+        type : String,
+        required : true,
+        trim : true,
+        min : 1
+    },
     // Scope defines user access level, set and updated by the client app
     scope : {
         type : String,

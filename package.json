@@ -1,6 +1,6 @@
 {
-  "name": "zum",
-  "version": "0.0.5",
+  "name": "zum-v2",
+  "version": "0.1.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -22,14 +22,13 @@
   "homepage": "https://github.com/zum-v2#readme",
   "dependencies": {
     "@sendgrid/mail": "^7.1.0",
-    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "email-validator": "^2.0.4",
     "express": "^4.16.4",
     "mongoose": "^5.9.10",
     "mustache": "^4.0.1",
     "njwt": "^1.0.0",
-    "qrcode": "^1.4.4",
     "secure-random": "^1.1.2",
     "uniqid": "^5.2.0"
   }
