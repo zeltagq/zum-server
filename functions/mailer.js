@@ -6,9 +6,10 @@ const {EVC} = require('../db/models');
 const {User} = require('../db/models');
 const uniqid = require('uniqid');
 const path = require('path');
+const moment = require('moment');
 
 // Sendgrid api key
-mail.setApiKey(process.env.SG);
+mail.setApiKey(process.env.SG || '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');
 
 // Email verification after registration
 function registrationEmail(appname, email) {
@@ -179,10 +180,39 @@ function terminationMail(appname, email, reason) {
     });
 }
 
+// Account disable mail
+function disableMail(appname, email, duration, reason) {
+    let data = fs.readFileSync(path.join(__dirname, '..', 'mail', 'account-disable.html'));
+    let content = data.toString('utf8');
+
+    let view = {
+        app : appname,
+        reason : reason,
+        duration : duration,
+        end_date : moment().add(duration, 'days').format('dddd (DD MMMM YYYY)')
+    }
+
+    let html = mustache.render(content, view);
+
+    const msg = {
+        to: email,
+        from: 'noreply@zumapi.gq',
+        subject: 'Account Disabled',
+        html: html
+    };
+
+    mail.send(msg).then(() => {
+        console.log(`Account disable mail sent to ${email}`);
+    }, (err) => {
+        console.error(err);
+    });
+}
+
 module.exports = {
     registrationEmail,
     confirmVerification,
     passwordResetEmail,
     confirmPassReset,
-    terminationMail
+    terminationMail,
+    disableMail
 };

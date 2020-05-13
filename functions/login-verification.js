@@ -24,7 +24,7 @@ function verify(req,res) {
                         return res.status(403).send(response);
                     }
                     // check if user is disabled
-                    if (result[0].disabled === true) {
+                    if (result[0].disabled.value === true) {
                         return res.status(403).send(response);
                     }
                     encryptor.decode(pass,hash,(r) => {

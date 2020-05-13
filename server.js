@@ -8,6 +8,9 @@ const {delUser} = require('./functions/delete_user');
 const {updateUser} = require('./functions/update_user');
 const {getMK} = require('./functions/get_mk');
 const {confirmVerification} = require('./functions/mailer');
+const {disableUser} = require('./functions/disable_user');
+const {registerCount, loggedCount, disabledCount, cpuUtil, memUtil, diskUtil} = require('./functions/stats');
+const {cron_userEnable} = require('./functions/cron_jobs');
 
 const app = express();
 
@@ -16,6 +19,9 @@ const port = process.env.PORT || 3000;
 app.use(express.static(__dirname + "/public"));
 
 app.use(bodyparser.json());
+
+// Background cron jobs
+cron_userEnable();
 
 app.get('/',(req,res) => {
    res.sendFile(`${__dirname}/public/home.html`)
@@ -47,6 +53,35 @@ app.patch('/users/:username', (req,res) => {
 
 app.get('/email-verification/:code', (req,res) => {
     confirmVerification(req,res);
+});
+
+app.post('/users/disable', (req,res) => {
+    disableUser(req,res);
+});
+
+// Endpoints for server stats
+app.get('/stats/:option', (req,res) => {
+    if(req.params.option === 'registered') {
+        registerCount(res);
+    }
+    else if(req.params.option === 'logged') {
+        loggedCount(res);
+    }
+    else if(req.params.option === 'disabled') {
+        disabledCount(res);
+    }
+    else if(req.params.option === 'cpu-util') {
+        cpuUtil(res);
+    }
+    else if(req.params.option === 'mem-util') {
+        memUtil(res);
+    }
+    else if(req.params.option === 'disk-util') {
+        diskUtil(res);
+    }
+    else {
+        res.sendStatus(404);
+    }
 });
 
 app.listen(port,() => {

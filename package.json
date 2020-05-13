@@ -26,9 +26,11 @@
     "body-parser": "^1.18.3",
     "email-validator": "^2.0.4",
     "express": "^4.16.4",
+    "moment": "^2.25.3",
     "mongoose": "^5.9.10",
     "mustache": "^4.0.1",
     "njwt": "^1.0.0",
+    "node-os-utils": "^1.2.2",
     "secure-random": "^1.1.2",
     "uniqid": "^5.2.0"
   }

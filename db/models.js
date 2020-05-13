@@ -55,8 +55,14 @@ let UserSchema = new db.Schema({
     },
     // Denotes if user is disabled
     disabled : {
-        type : Boolean,
-        default : false
+        value : {
+            type : Boolean,
+            default : false
+        },
+        end_date : {
+            type : String,
+            default : null
+        }
     }
     // MFA
     // mfa : {
@@ -79,6 +85,12 @@ let KeySchema = new db.Schema({
         required : true,
         trim : true,
         min : 1
+    },
+    // will self destroy in 24 hrs
+    expireAt: {
+        type: Date,
+        default: Date.now,
+        index: { expires: '1440m' },
     }
 });
 
