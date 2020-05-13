@@ -9,7 +9,7 @@ const path = require('path');
 const moment = require('moment');
 
 // Sendgrid api key
-mail.setApiKey(process.env.SG || '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');
+mail.setApiKey(process.env.SG);
 
 // Email verification after registration
 function registrationEmail(appname, email) {
