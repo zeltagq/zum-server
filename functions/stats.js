@@ -6,8 +6,8 @@ const nos = require('node-os-utils');
 // Number of registered users
 function registerCount(res) {
     User.find().then((users) => {
-        let count = users.length;
-        res.status(200).send(count);
+        let count = (users.length).toString();
+        res.send(count);
     }, (err) => {
         res.status(500).send(err);
     });
@@ -16,8 +16,8 @@ function registerCount(res) {
 // Number of logged in users
 function loggedCount(res) {
     SigningKey.find().then((users) => {
-        let count = users.length;
-        res.status(200).send(count);
+        let count = (users.length).toString();
+        res.send(count);
     }, (err) => {
         res.status(500).send(err);
     });
@@ -26,8 +26,8 @@ function loggedCount(res) {
 // Number of disabled accounts
 function disabledCount(res) {
     User.find({'disabled.value':true}).then((users) => {
-        let count = users.length;
-        res.status(200).send(count);
+        let count = (users.length).toString();
+        res.send(count);
     }, (err) => {
         res.status(500).send(err);
     });
@@ -36,7 +36,8 @@ function disabledCount(res) {
 // CPU Utilization
 function cpuUtil(res) {
     nos.cpu.usage().then((cpuPercentage) => {
-        res.status(200).send(Math.round(cpuPercentage*10)/10);
+        let result = (Math.round(cpuPercentage*10)/10).toString();
+        res.send(result);
     }, (err) => {
         res.status(500).send(err);
     });
@@ -45,7 +46,8 @@ function cpuUtil(res) {
 // Memory Utilization
 function memUtil(res) {
     nos.mem.info().then(info => {
-        res.status(200).send(Math.round((100 - info.freeMemPercentage)*10)/10);
+        let result = (Math.round((100 - info.freeMemPercentage)*10)/10).toString();
+        res.send(result);
     }, (err) => {
         res.status(500).send(err);
     });
@@ -54,7 +56,8 @@ function memUtil(res) {
 // Disk Utilization
 function diskUtil(res) {
     nos.drive.info().then(info => {
-        res.status(200).send(Math.round(info.usedPercentage));
+        let result = (Math.round(info.usedPercentage)).toString();
+        res.send(result);
     }, (err) => {
         res.status(500).send(err);
     });
