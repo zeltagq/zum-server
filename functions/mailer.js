@@ -208,11 +208,37 @@ function disableMail(appname, email, duration, reason) {
     });
 }
 
+// Account enable mail
+function enableMail(appname, email) {
+    let data = fs.readFileSync(path.join(__dirname, '..', 'mail', 'account-enable.html'));
+    let content = data.toString('utf8');
+
+    let view = {
+        app: appname,
+    }
+
+    let html = mustache.render(content, view);
+
+    const msg = {
+        to: email,
+        from: 'noreply@zumapi.gq',
+        subject: 'Account Enabled',
+        html: html
+    };
+
+    mail.send(msg).then(() => {
+        console.log(`Account enable mail sent to ${email}`);
+    }, (err) => {
+        console.error(err);
+    });
+}
+
 module.exports = {
     registrationEmail,
     confirmVerification,
     passwordResetEmail,
     confirmPassReset,
     terminationMail,
-    disableMail
+    disableMail,
+    enableMail
 };

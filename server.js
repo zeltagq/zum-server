@@ -8,7 +8,8 @@ const {delUser} = require('./functions/delete_user');
 const {updateUser} = require('./functions/update_user');
 const {getMK} = require('./functions/get_mk');
 const {confirmVerification} = require('./functions/mailer');
-const {disableUser} = require('./functions/disable_user');
+const {disableUser, enableUser} = require('./functions/disable_user');
+const {registerApp} = require('./functions/register_app');
 const {registerCount, loggedCount, disabledCount, cpuUtil, memUtil, diskUtil} = require('./functions/stats');
 const {cron_userEnable} = require('./functions/cron_jobs');
 
@@ -25,6 +26,10 @@ cron_userEnable();
 
 app.get('/',(req,res) => {
    res.sendFile(`${__dirname}/public/home.html`)
+});
+
+app.post('/apps/register', (req,res) => {
+    registerApp(req,res);
 });
 
 app.get('/mk/:priority', (req,res) => {
@@ -57,6 +62,10 @@ app.get('/email-verification/:code', (req,res) => {
 
 app.post('/users/disable', (req,res) => {
     disableUser(req,res);
+});
+
+app.get('/users/enable/:username', (req,res) => {
+    enableUser(req,res);
 });
 
 // Endpoints for server stats

@@ -3,12 +3,12 @@ const {SigningKey} = require('../db/models');
 let njwt = require('njwt');
 let randomCrypto = require('secure-random');
 
-function createToken(username, scope, callback) {
+function createToken(username, scope, aud, callback) {
     let signingKey = randomCrypto(256, {type:'Buffer'});
 
     var claims = {
         iss: "ZUM",
-        aud: "http://myapp.com",
+        aud: aud,
         sub: username,
         scope: scope // scope is used to differentiate access levels (standard/premium/blocked)
     }

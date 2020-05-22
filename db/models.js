@@ -1,6 +1,32 @@
 const {db} = require('./dbconf');
 const encryptor = require('../functions/encryptor');
 
+// Schema for apps registered with the server
+let AppSchema = new db.Schema({
+    appName : {
+        type : String,
+        required : true,
+        unique : true,
+        trim : true,
+        min : 1
+    },
+    ip : {
+        type : Array,
+        required : true
+    },
+    // value will be without http or www
+    domain : {
+        type : String,
+        required : true,
+        trim : true,
+        min : 1
+    },
+    https : {
+        type : Boolean,
+        default : false
+    }
+});
+
 // Schema for users
 let UserSchema = new db.Schema({
     username : {
@@ -64,11 +90,6 @@ let UserSchema = new db.Schema({
             default : null
         }
     }
-    // MFA
-    // mfa : {
-    //     type : Boolean,
-    //     default : false
-    // }
 });
 
 // Schema for signing keys used to sign jwt tokens by the server
@@ -130,23 +151,6 @@ let EvcSchema = new db.Schema({
     }
 });
 
-// Schema for mfa secrets
-let mfaSchema = new db.Schema({
-    username : {
-        type : String,
-        required : true,
-        trim : true,
-        min : 1,
-        unique: true
-    },
-    secret : {
-        type : String,
-        required : true,
-        trim : true,
-        min : 1
-    }
-});
-
 UserSchema.pre('save',function(next) {
     let user = this;
     if(user.isModified('password')) {
@@ -161,9 +165,10 @@ UserSchema.pre('save',function(next) {
     }
 });
 
+let App = db.model('App', AppSchema); // Model for storing apps
 let User = db.model('User', UserSchema); // Model for storing users
 let SigningKey = db.model('sk', KeySchema); // Model for storing signing keys
 let MK = db.model('mk', MasterKeySchema); // Model for storing master keys
 let EVC = db.model('evc', EvcSchema); // Model for storing email verification codes
 
-module.exports = {User, SigningKey, MK, EVC};
+module.exports = {App, User, SigningKey, MK, EVC};

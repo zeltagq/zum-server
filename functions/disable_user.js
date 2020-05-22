@@ -1,11 +1,12 @@
+// Module to disable and enable user accounts
 const {User} = require('../db/models');
 const {disableMail} = require('./mailer');
+const {enableMail} = require('./mailer');
 const moment = require('moment');
 
 function disableUser(req,res) {
 
     let username = req.body.username;
-    let app = req.body.app;
     let duration = req.body.duration;
     let reason = req.body.reason;
 
@@ -15,7 +16,7 @@ function disableUser(req,res) {
         user.disabled.value = true;
         user.disabled.end_date = end_date;
         user.save().then((user) => {
-            disableMail(app, user.email, duration, reason); //send mail to user
+            disableMail(user.app, user.email, duration, reason); //send mail to user
             res.sendStatus(200);
         }, (err) => {
             res.status(500).send(err);
@@ -26,4 +27,21 @@ function disableUser(req,res) {
 
 }
 
-module.exports = {disableUser};
+function enableUser(req,res) {
+    let username = req.params.username;
+    User.find({username:username}).then((users) => {
+        let user = users[0];
+        user.disabled.value = false;
+        user.disabled.end_date = null;
+        user.save().then((user) => {
+            enableMail(user.app, user.email); //send mail to user
+            res.sendStatus(200);
+        }, (err) => {
+            res.status(500).send(err);
+        });
+    }, (err) => {
+        res.status(500).send(err);
+    });
+}
+
+module.exports = {disableUser, enableUser};
