@@ -24,6 +24,12 @@ function updateUser(req,res) {
                    if(data.hasOwnProperty('email')) {
                        user.email = data.email;
                    }
+                   if(data.hasOwnProperty('phone')) {
+                       user.phone = data.phone;
+                   }
+                   if(data.hasOwnProperty('address')) {
+                       user.address = data.address;
+                   }
                    if(data.hasOwnProperty('country')) {
                        user.country = data.country;
                    }

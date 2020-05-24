@@ -55,6 +55,18 @@ let UserSchema = new db.Schema({
         min : 1,
         unique : true
     },
+    phone : {
+        type : String,
+        trim : true,
+        min : 7,
+        default : null
+    },
+    address : {
+        type : String,
+        trim : true,
+        min : 10,
+        default : null
+    },
     country : {
         type : String,
         required : true,
