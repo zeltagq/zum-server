@@ -10,6 +10,7 @@ const {getMK} = require('./functions/get_mk');
 const {confirmVerification} = require('./functions/mailer');
 const {disableUser, enableUser} = require('./functions/disable_user');
 const {registerApp} = require('./functions/register_app');
+const {verifyToken} = require('./functions/token-verification');
 const {registerCount, loggedCount, disabledCount, cpuUtil, memUtil, diskUtil} = require('./functions/stats');
 const {cron_userEnable} = require('./functions/cron_jobs');
 
@@ -46,6 +47,10 @@ app.get('/users/:input', (req,res) => {
 
 app.post('/login', (req,res) => {
     verify(req,res);
+});
+
+app.get('/verify/:username/:token', (req,res) => {
+    verifyToken(req,res);
 });
 
 app.delete('/users/:username', (req,res) => {
