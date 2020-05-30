@@ -9,15 +9,18 @@ function delUser(req,res) {
             res.status(404).send('User not found');
         }
         else {
+            if(user.scope==='admin') {
+                return res.status(400).send('Admin account cannot be terminated');
+            }
             User.findOneAndRemove({username:req.params.username}).then((user) => {
                 res.sendStatus(200);
                 terminationMail(appname, user.email, reason);
             },(err) => {
-                res.status(400).send(err);
+                res.status(500).send(err);
             });
         }
     },(err) => {
-        res.status(400).send(err);
+        res.status(500).send(err);
     });
 }
 module.exports = {delUser};

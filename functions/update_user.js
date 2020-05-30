@@ -41,11 +41,11 @@ function updateUser(req,res) {
                        console.log(`User info updated [Username : ${user.username}]`);
                        rotateMK(req.body.priority);
                    },(err) => {
-                       res.status(400).send(err);
+                       res.status(500).send(err);
                    });
                }
            },(err) => {
-               res.status(400).send(err);
+               res.status(500).send(err);
            });
        }
     });

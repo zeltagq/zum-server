@@ -12,6 +12,9 @@ function disableUser(req,res) {
 
     User.find({username:username}).then((result) => {
         let user = result[0];
+        if(user.scope === 'admin') {
+            return res.status(400).send('Admin account cannot be disabled');
+        }
         let end_date = moment().add(duration, 'days').format('DD-MM-YYYY');
         user.disabled.value = true;
         user.disabled.end_date = end_date;

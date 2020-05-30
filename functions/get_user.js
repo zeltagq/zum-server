@@ -7,16 +7,22 @@ function getUser(req,res) {
     let result = emailValidator.validate(req.params.input);
     if (result === true) {
         User.find({email:req.params.input}).then((users) => {
+            if(users.length === 0) {
+                return res.sendStatus(404);
+            }
             res.status(200).send(users[0]);
         },(err) => {
-            res.status(400).send(err);
+            res.status(500).send(err);
         });
     }
     else {
         User.find({username:req.params.input}).then((users) => {
+            if(users.length === 0) {
+                return res.sendStatus(404);
+            }
             res.status(200).send(users[0]);
         },(err) => {
-            res.status(400).send(err);
+            res.status(500).send(err);
         });
     }
 }

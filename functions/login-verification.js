@@ -73,7 +73,7 @@ function verify(req,res) {
                     res.status(404).send('User not found');
                 }
             },(err) => {
-                res.status(400).send(err);
+                res.status(500).send(err);
             });
         }
     });

@@ -16,14 +16,14 @@ function getMK(req, res) {
                 console.log(`Master key (${req.params.priority}) created`);
                 res.status(200).send(key);
             },(err) => {
-                console.error('Failed to create new master key');
+                res.status(500).send(err);
             });
         }
         else {
             res.status(200).send(mk[0].key);
         }
     },(err) => {
-        res.status(400).send(err);
+        res.status(500).send(err);
     });
 }
 
