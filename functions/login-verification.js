@@ -45,12 +45,7 @@ function verify(req,res) {
                                         else {
                                             console.log(`Successful login : ${uname}`)
                                             response = {"verified" : true};
-                                            res.cookie(`zum:${app}`, token, {
-                                                domain : domain,
-                                                httpOnly : true,
-                                                secure : secure_flag,
-                                                expires : new Date(new Date().getTime() + (60*60*1000*24)) // 24 hrs
-                                            }).send(response);
+                                            res.set('X-Auth-Token', token).send(response);
                                             rotateMK(req.body.priority);
                                         }
                                     });

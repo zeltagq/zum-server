@@ -14,9 +14,11 @@ function createUser(req,res) {
         else {
             let username = data.username;
             let password = data.password;
-            let name = data.name;
-            let email = data.email;
-            let country = data.country;
+            let name = data.name || null;
+            let email = data.email || null;
+            let phone = data.phone || null;
+            let address = data.address || null;
+            let country = data.country || null;
             let scope = data.scope || 'user:basic';
             let app = data.app;
 
@@ -25,6 +27,8 @@ function createUser(req,res) {
                 password : password,
                 name : name,
                 email : email,
+                phone : phone,
+                address : address,
                 country : country,
                 scope : scope,
                 app : app
@@ -37,7 +41,18 @@ function createUser(req,res) {
                         res.sendStatus(200);
                         console.log(`New user registration : ${user.username}`);
                         rotateMK(req.body.priority);
-                        registrationEmail(app, email);
+                        if(user.email !== null) {
+                            registrationEmail(app, email);
+                        }
+                        else {
+                            //no email verification
+                            user.verified = true;
+                            user.save().then(() => {
+                                // Do nothing
+                            }, (err) => {
+                                console.error(err);
+                            });
+                        }
                     }, (err) => {
                         res.status(400).send(err);
                     });

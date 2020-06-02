@@ -14,7 +14,9 @@ function delUser(req,res) {
             }
             User.findOneAndRemove({username:req.params.username}).then((user) => {
                 res.sendStatus(200);
-                terminationMail(appname, user.email, reason);
+                if(user.email !== null) {
+                    terminationMail(appname, user.email, reason);
+                }
             },(err) => {
                 res.status(500).send(err);
             });

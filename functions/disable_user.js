@@ -19,7 +19,9 @@ function disableUser(req,res) {
         user.disabled.value = true;
         user.disabled.end_date = end_date;
         user.save().then((user) => {
-            disableMail(user.app, user.email, duration, reason); //send mail to user
+            if(user.email !== null) {
+                disableMail(user.app, user.email, duration, reason); //send mail to user
+            }
             res.sendStatus(200);
         }, (err) => {
             res.status(500).send(err);
@@ -37,7 +39,9 @@ function enableUser(req,res) {
         user.disabled.value = false;
         user.disabled.end_date = null;
         user.save().then((user) => {
-            enableMail(user.app, user.email); //send mail to user
+            if(user.email !== null) {
+                enableMail(user.app, user.email); //send mail to user
+            }
             res.sendStatus(200);
         }, (err) => {
             res.status(500).send(err);

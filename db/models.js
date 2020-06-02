@@ -44,13 +44,11 @@ let UserSchema = new db.Schema({
     },
     name : {
         type : String,
-        required : true,
         trim : true,
         min : 1
     },
     email : {
         type : String,
-        required : true,
         trim : true,
         min : 1,
         unique : true
@@ -69,7 +67,6 @@ let UserSchema = new db.Schema({
     },
     country : {
         type : String,
-        required : true,
         trim : true,
         min : 1
     },
