@@ -4,6 +4,7 @@ const bodyparser = require('body-parser');
 const {createUser} = require('./functions/user_creation');
 const {getUser} = require('./functions/get_user');
 const {verify} = require('./functions/login-verification');
+const {logout} = require('./functions/logout');
 const {delUser} = require('./functions/delete_user');
 const {updateUser} = require('./functions/update_user');
 const {getMK} = require('./functions/get_mk');
@@ -47,6 +48,10 @@ app.get('/users/:input', (req,res) => {
 
 app.post('/login', (req,res) => {
     verify(req,res);
+});
+
+app.get('/logout/:username', (req,res) => {
+    logout(req,res);
 });
 
 app.get('/verify/:username/:token', (req,res) => {
