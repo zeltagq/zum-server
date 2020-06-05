@@ -8,7 +8,7 @@ function getUser(req,res) {
     if (result === true) {
         User.find({email:req.params.input}).then((users) => {
             if(users.length === 0) {
-                return res.sendStatus(404);
+                return res.status(207).send('nofo');
             }
             res.status(200).send(users[0]);
         },(err) => {
@@ -18,7 +18,7 @@ function getUser(req,res) {
     else {
         User.find({username:req.params.input}).then((users) => {
             if(users.length === 0) {
-                return res.sendStatus(404);
+                return res.status(207).send('nofo');
             }
             res.status(200).send(users[0]);
         },(err) => {

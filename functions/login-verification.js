@@ -56,7 +56,7 @@ function verify(req,res) {
                             // Wrong password
                             else {
                                 console.log(`Failed login : ${uname}`)
-                                res.status(200).send(response);
+                                res.status(207).send(response);
                             }
                         });
                     }
