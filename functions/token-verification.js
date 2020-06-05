@@ -9,7 +9,8 @@ function verifyToken(req,res) {
             res.status(401).send(response); // not logged in
         }
         else {
-            let sk = result[0].key;
+            let key = result[0].key;
+            let sk = Buffer.from(key, 'base64');
             let token = req.params.token;
             njwt.verify(token, sk, (err, verifiedJwt) => {
                 if (err) {
