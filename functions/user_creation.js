@@ -50,11 +50,13 @@ function createUser(req,res) {
                             user.save().then(() => {
                                 // Do nothing
                             }, (err) => {
-                                res.send(err);
+                                res.status(500).send(err);
+                                console.log(err);
                             });
                         }
                     }, (err) => {
-                        res.send(err);
+                        res.status(500).send(err);
+                        console.log(err);
                     });
                 }
                 else {
