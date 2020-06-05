@@ -9,7 +9,7 @@ function createUser(req,res) {
     jwtDecode(req.body.token, req.body.priority, (err, data) => {
         if (err) {
             console.warn(`Potential malicious registration request received`);
-            res.sendStatus(400);
+            res.status(400).send(err);
         }
         else {
             let username = data.username;
@@ -50,11 +50,11 @@ function createUser(req,res) {
                             user.save().then(() => {
                                 // Do nothing
                             }, (err) => {
-                                console.error(err);
+                                res.send(err);
                             });
                         }
                     }, (err) => {
-                        res.status(400).send(err);
+                        res.send(err);
                     });
                 }
                 else {
