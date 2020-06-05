@@ -50,7 +50,8 @@ let UserSchema = new db.Schema({
     email : {
         type : String,
         trim : true,
-        min : 1
+        min : 1,
+        default : null
     },
     phone : {
         type : String,
