@@ -21,16 +21,12 @@ const app = express();
 
 const port = process.env.PORT || 80;
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + '/static', { dotfiles: 'allow' }));
 
 app.use(bodyparser.json());
 
 // Background cron jobs
 cron_userEnable();
-
-app.get('/',(req,res) => {
-   res.sendFile(`${__dirname}/public/home.html`)
-});
 
 app.post('/apps/register', (req,res) => {
     registerApp(req,res);
