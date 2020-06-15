@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyparser = require('body-parser');
+const https = require('https');
+const fs = require('fs');
 
 const {createUser} = require('./functions/user_creation');
 const {getUser} = require('./functions/get_user');
@@ -17,7 +19,7 @@ const {cron_userEnable} = require('./functions/cron_jobs');
 
 const app = express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
 app.use(express.static(__dirname + "/public"));
 
@@ -103,6 +105,16 @@ app.get('/stats/:option', (req,res) => {
     }
 });
 
+// Production
+// https.createServer({
+//     key: fs.readFileSync('/etc/letsencrypt/live/www.zumapi.gq/privkey.pem'),
+//     cert: fs.readFileSync('/etc/letsencrypt/live/www.zumapi.gq/cert.pem'),
+//     ca: fs.readFileSync('/etc/letsencrypt/live/www.zumapi.gq/chain.pem')
+// }, app).listen(port, () => {
+//     console.log('Server started');
+// });
+
+// Development
 app.listen(port,() => {
     console.log(`Server started on port ${port}`);
 });
