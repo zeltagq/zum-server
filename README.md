@@ -4,7 +4,7 @@
 
 ### Warning : Work in progress
 
-*This is the raw code of zum server. Zum aims to be an all in one open source solution for authentication and user management. It is created using Node JS.*
+*This is the raw source code for zum server. Zum aims to be an all in one open source solution for authentication and user management. It is created using Node JS.*
 
 ### Features
 * Exposes an easy to use client facing api.
