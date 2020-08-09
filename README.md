@@ -13,4 +13,4 @@
 * Mail support and email verification using sendgrid. You will need to specify the api key in the ```mailer``` file.
 * Customizable user schema. Change the schema by editting the ```models``` file in the ```db``` section.
 * Passwords are stored in the form of salted hashes by default.
-* All sensitive communication to and from the server is carried out using signed jwt tokens.
+* All sensitive communication to and from the server is carried out using signed json web tokens.
